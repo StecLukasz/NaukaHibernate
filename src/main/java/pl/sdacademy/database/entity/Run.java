@@ -14,13 +14,25 @@ public class Run {
     @Column(name = "members_limit")
     private Integer membersLimit;
 
+    private Integer distance;
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+
+
     public Run() {
     }
 
-    public Run(Long id, String name, Integer membersLimit) {
+    public Run(Long id, String name, Integer membersLimit, Integer distance) {
         this.id = id;
         this.name = name;
         this.membersLimit = membersLimit;
+        this.distance= distance;
     }
 
     public Long getId() {
