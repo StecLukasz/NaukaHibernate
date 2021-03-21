@@ -79,4 +79,22 @@ public class DaoImpl implements RunDao {
         session.close();
 
     }
+
+    @Override
+    public List<Run> findMembersByLimitRange(int min, int max) {
+        SessionFactory factory = HibernateUtils
+                .getInstance().getSessionFactory();
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+
+        List<Run> runList = session.createQuery("from Run where members_limit between :min and :max")
+                .setParameter("min", min)
+                .setParameter("max", max)
+                .list();
+
+        session.getTransaction().commit();
+        session.close();
+
+        return runList;
+    }
 }

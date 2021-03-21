@@ -10,4 +10,6 @@ public interface RunDao {
     List<Run> findAll();
     void deleteById(Long id);
 
+List<Run> findMembersByLimitRange(int min, int max);
+
 }

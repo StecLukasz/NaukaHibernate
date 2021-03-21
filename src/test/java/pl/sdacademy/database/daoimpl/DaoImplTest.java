@@ -136,4 +136,34 @@ class DaoImplTest {
             fail(e);
         }
     }
+    @Test
+    void findMembersByLimitRange(){
+        try {
+            Run run1 = new Run(null, "Bieg Janusza", 50,20);
+            Run run2 = new Run(null, "Bieg Grażyny", 100,20);
+            Run run3 = new Run(null, "Bieg Dżesiki", 150,20);
+
+            runDao.save(run1);
+            runDao.save(run2);
+            runDao.save(run3);
+
+            List<Run> found1 = runDao.findMembersByLimitRange(40,60);
+            List<Run> found2 = runDao.findMembersByLimitRange(40,200);
+            List<Run> found3 = runDao.findMembersByLimitRange(40,45);
+
+            assertNotNull(found1);
+            assertEquals(1, found1.size());
+            assertEquals(run1.getId(), found1.get(0).getId());
+            assertEquals(run1.getName(), found1.get(0).getName());
+            assertEquals(run1.getMembersLimit(), found1.get(0).getMembersLimit());
+
+            assertEquals(3,found2.size());
+            assertEquals(0,found3.size());
+
+
+        }catch (Exception e){
+            fail(e);
+        }
+
+    }
 }
