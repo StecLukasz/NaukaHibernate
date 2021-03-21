@@ -14,5 +14,8 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
+        <mapping class="pl.sdacademy.database.entity.Run"/>
+        <mapping class="pl.sdacademy.database.entity.RunMember"/>
+
     </session-factory>
 </hibernate-configuration>

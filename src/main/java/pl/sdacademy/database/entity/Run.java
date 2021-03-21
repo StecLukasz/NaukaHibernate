@@ -9,7 +9,9 @@ public class Run {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(length = 100)
     private String name;
+    @Column(name = "members_limit")
     private Integer membersLimit;
 
     public Run() {
