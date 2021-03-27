@@ -18,7 +18,7 @@ public class Run {
     private Integer distance;
 
 
-    @OneToMany(mappedBy = "run")
+    @OneToMany(mappedBy = "run", fetch = FetchType.EAGER)
     private Set<RunMember> members= new HashSet<>();
 
     public Set<RunMember> getMembers() {
