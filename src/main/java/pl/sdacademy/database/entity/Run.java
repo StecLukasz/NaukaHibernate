@@ -1,6 +1,8 @@
 package pl.sdacademy.database.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "RUN")
@@ -13,8 +15,19 @@ public class Run {
     private String name;
     @Column(name = "members_limit")
     private Integer membersLimit;
-
     private Integer distance;
+
+
+    @OneToMany(mappedBy = "run")
+    private Set<RunMember> members= new HashSet<>();
+
+    public Set<RunMember> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<RunMember> members) {
+        this.members = members;
+    }
 
     public Integer getDistance() {
         return distance;

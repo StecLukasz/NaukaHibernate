@@ -15,8 +15,9 @@ public class RunMemberDaoImpl implements RunMemberDao {
                 .getInstance().getSessionFactory();
 
         Session session = factory.getCurrentSession();
+        session.beginTransaction();
         session.saveOrUpdate(runMember);
-        session.beginTransaction().commit();
+        session.getTransaction().commit();
         session.close();
 
     }

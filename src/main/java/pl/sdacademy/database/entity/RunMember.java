@@ -14,6 +14,18 @@ public class RunMember {
     private String name;
     private Integer start_number;
 
+    @ManyToOne
+    @JoinColumn(name = "id_run")
+    private Run run;
+
+    public Run getRun() {
+        return run;
+    }
+
+    public void setRun(Run run) {
+        this.run = run;
+    }
+
     public RunMember() {
     }
 
@@ -22,6 +34,8 @@ public class RunMember {
         this.name = name;
         this.start_number = start_number;
     }
+
+
 
     public Long getId() {
         return id;

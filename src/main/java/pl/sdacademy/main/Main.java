@@ -2,7 +2,12 @@ package pl.sdacademy.main;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import pl.sdacademy.database.dao.RunDao;
+import pl.sdacademy.database.dao.RunMemberDao;
+import pl.sdacademy.database.daoimpl.DaoImpl;
+import pl.sdacademy.database.daoimpl.RunMemberDaoImpl;
 import pl.sdacademy.database.entity.Run;
+import pl.sdacademy.database.entity.RunMember;
 import pl.sdacademy.database.utils.HibernateUtils;
 
 import javax.persistence.NoResultException;
@@ -14,12 +19,31 @@ public class Main {
 
 //        insertOneRun();
 //        selectOneRun();
-        printAllRuns();
+//        printAllRuns();
 
-
+        oneToManySaveTest();
         HibernateUtils.getInstance()
                 .getSessionFactory()
                 .close();
+    }
+
+
+    private static void oneToManySaveTest() {
+        RunDao runDao = new DaoImpl();
+        RunMemberDao runMemberDao = new RunMemberDaoImpl();
+
+        Run run = new Run();
+        run.setName("Bieg na 10");
+        runDao.save(run);
+
+        for (int i = 0; i < 10; i++) {
+            RunMember member = new RunMember();
+            member.setName("Biegacz nr " +i);
+            runMemberDao.save(member);
+
+            member.setRun(run);
+            runMemberDao.save(member);
+        }
 
     }
 
@@ -48,25 +72,26 @@ public class Main {
         Session session = factory.getCurrentSession();
 
         session.beginTransaction();
-        Run run =null;
+        Run run = null;
         try {
             run = (Run) session
                     .createQuery("from Run where id=:id")
                     .setParameter("id", 5l)
                     .getSingleResult();
-        } catch (NoResultException e){        }
+        } catch (NoResultException e) {
+        }
 
         session.getTransaction().commit();
         session.close();
-        if (run!=null) {
+        if (run != null) {
 
             System.out.printf("Bieg: " + run.getName());
-        }else {
+        } else {
             System.out.println("Brak takiego biegu");
         }
     }
 
-    private static void printAllRuns(){
+    private static void printAllRuns() {
         SessionFactory factory = HibernateUtils
                 .getInstance().getSessionFactory();
 
@@ -78,8 +103,8 @@ public class Main {
 
         session.getTransaction().commit();
         session.close();
-        for (Run run:list){
-            System.out.printf("id=%d name =%s, limit=%d\n", run.getId(),run.getName(),run.getMembersLimit());
+        for (Run run : list) {
+            System.out.printf("id=%d name =%s, limit=%d\n", run.getId(), run.getName(), run.getMembersLimit());
         }
     }
 }
